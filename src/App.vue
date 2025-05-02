@@ -14,14 +14,20 @@
     </div>
     
     <div class="task-list">
-      <h2>Daftar Kegiatan</h2>
+      <div class="task-filter">
+        <h2>Daftar Kegiatan</h2>
+        <label class="filter-checkbox">
+          <input type="checkbox" v-model="showOnlyActive">
+          Tampilkan hanya yang belum selesai
+        </label>
+      </div>
       
-      <p v-if="tasks.length === 0" class="empty-message">
-        Belum ada kegiatan yang ditambahkan
+      <p v-if="filteredTasks.length === 0" class="empty-message">
+        Tidak ada kegiatan yang ditampilkan
       </p>
       
       <ul v-else class="tasks">
-        <li v-for="(task, index) in tasks" :key="index" class="task-item">
+        <li v-for="(task, index) in filteredTasks" :key="index" class="task-item">
           <div class="task-content">
             <input 
               type="checkbox" 
@@ -30,7 +36,7 @@
             >
             <span class="task-text" :class="{ 'completed': task.completed }">{{ task.text }}</span>
           </div>
-          <button @click="deleteTask(index)" class="delete-button">×</button>
+          <button @click="deleteTask(tasks.indexOf(task))" class="delete-button">×</button>
         </li>
       </ul>
     </div>
@@ -42,11 +48,20 @@ export default {
   data() {
     return {
       newTask: '', 
+      showOnlyActive: false,
       tasks: [
         { text: "Mengerjakan FreeCodeCamp", completed: false },
         { text: "Belajar JavaScript dan Framework VueJS + ViteJS", completed: false },
         { text: "Mengumpulkan UTS Sebelum Tenggat Waktu", completed: false }
       ]
+    }
+  },
+  computed: {
+    filteredTasks() {
+      if (this.showOnlyActive) {
+        return this.tasks.filter(task => !task.completed);
+      }
+      return this.tasks;
     }
   },
   methods: {
