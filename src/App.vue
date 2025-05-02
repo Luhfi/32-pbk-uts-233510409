@@ -22,7 +22,8 @@
       
       <ul v-else class="tasks">
         <li v-for="(task, index) in tasks" :key="index" class="task-item">
-          {{ task.text }}
+          <span class="task-text">{{ task.text }}</span>
+          <button @click="deleteTask(index)" class="delete-button">×</button>
         </li>
       </ul>
     </div>
@@ -51,6 +52,9 @@ export default {
       })
       
       this.newTask = '' 
+    },
+    deleteTask(index) {
+      this.tasks.splice(index, 1)
     }
   }
 }
@@ -94,6 +98,13 @@ h2 {
   border-left: 3px solid #4cb5ae;
   margin-bottom: 8px;
   border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-text {
+  flex: 1;
 }
 
 .add-task {
@@ -122,5 +133,26 @@ h2 {
 
 .add-button:hover {
   background-color: #3da89f;
+}
+
+.delete-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  margin-left: 10px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  font-weight: bold;
+}
+
+.delete-button:hover {
+  background-color: #c0392b;
 }
 </style>
