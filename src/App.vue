@@ -22,7 +22,14 @@
       
       <ul v-else class="tasks">
         <li v-for="(task, index) in tasks" :key="index" class="task-item">
-          <span class="task-text">{{ task.text }}</span>
+          <div class="task-content">
+            <input 
+              type="checkbox" 
+              v-model="task.completed" 
+              class="task-checkbox"
+            >
+            <span class="task-text">{{ task.text }}</span>
+          </div>
           <button @click="deleteTask(index)" class="delete-button">×</button>
         </li>
       </ul>
@@ -101,6 +108,19 @@ h2 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.task-content {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.task-checkbox {
+  margin-right: 10px;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
 }
 
 .task-text {
