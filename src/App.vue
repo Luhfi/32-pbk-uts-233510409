@@ -2,6 +2,17 @@
   <div class="container">
     <h1>Aplikasi Manajemen Kegiatan</h1>
     
+    <div class="add-task">
+      <input 
+        type="text" 
+        v-model="newTask" 
+        @keyup.enter="addTask"
+        placeholder="Tambahkan kegiatan baru..."
+        class="task-input"
+      >
+      <button @click="addTask" class="add-button">Tambah</button>
+    </div>
+    
     <div class="task-list">
       <h2>Daftar Kegiatan</h2>
       
@@ -22,11 +33,24 @@
 export default {
   data() {
     return {
+      newTask: '', 
       tasks: [
         { text: "Mengerjakan FreeCodeCamp", completed: false },
         { text: "Belajar JavaScript dan Framework VueJS + ViteJS", completed: false },
         { text: "Mengumpulkan UTS Sebelum Tenggat Waktu", completed: false }
       ]
+    }
+  },
+  methods: {
+    addTask() {
+      if (this.newTask.trim() === '') return 
+      
+      this.tasks.push({
+        text: this.newTask,
+        completed: false
+      })
+      
+      this.newTask = '' 
     }
   }
 }
@@ -70,5 +94,33 @@ h2 {
   border-left: 3px solid #4cb5ae;
   margin-bottom: 8px;
   border-radius: 5px;
+}
+
+.add-task {
+  display: flex;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.task-input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.add-button {
+  padding: 10px 20px;
+  background-color: #4cb5ae;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.add-button:hover {
+  background-color: #3da89f;
 }
 </style>
