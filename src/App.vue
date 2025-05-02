@@ -28,7 +28,7 @@
               v-model="task.completed" 
               class="task-checkbox"
             >
-            <span class="task-text">{{ task.text }}</span>
+            <span class="task-text" :class="{ 'completed': task.completed }">{{ task.text }}</span>
           </div>
           <button @click="deleteTask(index)" class="delete-button">×</button>
         </li>
@@ -125,6 +125,13 @@ h2 {
 
 .task-text {
   flex: 1;
+  transition: 0.3s;
+}
+
+.completed {
+  text-decoration: line-through;
+  color: #888;
+  transition: all 0.5s;
 }
 
 .add-task {
